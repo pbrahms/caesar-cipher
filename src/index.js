@@ -64,31 +64,59 @@ let caesarDecrypt = function (word, key) {
 // Class component
 class CypherForm extends React.Component {
     constructor() {
-      super();
-      this.handleSubmit = this.handleSubmit.bind(this);
+        super();
+        this.handleSubmitEncrypt = this.handleSubmitEncrypt.bind(this);
+        this.handleSubmitDecrypt = this.handleSubmitDecrypt.bind(this);
+        this.state = { output: '' };
     }
-  
-    handleSubmit(event) {
+
+    handleSubmitEncrypt(event) {
         event.preventDefault();
         const plaintext = (event.target.plaintext.value);
         const key = (event.target.key.value);
-        console.log(plaintext, key);
-        console.log(caesarEncrypt(plaintext, key));
+        this.setState({outputEncrypt: caesarEncrypt(plaintext, key)});
     }
-  
+
+    handleSubmitDecrypt(event) {
+        event.preventDefault();
+        const plaintext = (event.target.plaintext.value);
+        const key = (event.target.key.value);
+        this.setState({outputDecrypt: caesarDecrypt(plaintext, key)});
+    }
+
     render() {
         return (
-            <form onSubmit={this.handleSubmit}>
-                <label htmlFor="username">Enter plaintext</label>
-                <input id="plaintext" name="plaintext" type="text" />
-                <br />
+            <div>
+                <form onSubmit={this.handleSubmitEncrypt}>
+                    <label htmlFor="username">Enter plaintext:</label>
+                    <input id="plaintext" name="plaintext" type="text" />
+                    <br />
 
-                <label htmlFor="email">Enter key shift</label>
-                <input id="key" name="key" type="number" />
-                <br />
+                    <label htmlFor="email">Enter key shift:</label>
+                    <input id="key" name="key" type="number" />
+                    <br />
 
-                <button>Encrypt!</button>
-            </form>
+                    <button>Encrypt!</button>
+                    <br />
+
+                    <p>Result: {this.state.outputEncrypt}</p>
+                </form>
+                <form onSubmit={this.handleSubmitDecrypt}>
+                    <label htmlFor="username">Enter plaintext:</label>
+                    <input id="plaintext" name="plaintext" type="text" />
+                    <br />
+
+                    <label htmlFor="email">Enter key shift:</label>
+                    <input id="key" name="key" type="number" />
+                    <br />
+
+                    <button>Decrypt!</button>
+                    <br />
+
+                    <p>Result: {this.state.outputDecrypt}</p>
+                </form>
+            </div>
+
         );
     }
 }
