@@ -2,13 +2,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom'
 
-function getButtonText() {
-    return 'Encrypt/Decrypt';
-}
-
-
-//Encrypt
-
+// Encrypt function
 let caesarEncrypt = function (word, key) {
     let origAr = word.split('');
     let crypAr = [];
@@ -37,9 +31,7 @@ let caesarEncrypt = function (word, key) {
     return crypSt;
 }
 
-
-//Decrypt
-
+// Decrypt function
 let caesarDecrypt = function (word, key) {
     let origAr = word.split('');
     let crypAr = [];
@@ -69,34 +61,40 @@ let caesarDecrypt = function (word, key) {
     return crypSt;
 }
 
-let x = caesarEncrypt('FILip', 26);
-let y = caesarDecrypt('Gjmjq', 1);
-console.log(x);
-console.log(y);
+// Class component
+class CypherForm extends React.Component {
+    constructor() {
+      super();
+      this.handleSubmit = this.handleSubmit.bind(this);
+    }
+  
+    handleSubmit(event) {
+        event.preventDefault();
+        const plaintext = (event.target.plaintext.value);
+        const key = (event.target.key.value);
+        console.log(plaintext, key);
+        console.log(caesarEncrypt(plaintext, key));
+    }
+  
+    render() {
+        return (
+            <form onSubmit={this.handleSubmit}>
+                <label htmlFor="username">Enter plaintext</label>
+                <input id="plaintext" name="plaintext" type="text" />
+                <br />
 
+                <label htmlFor="email">Enter key shift</label>
+                <input id="key" name="key" type="number" />
+                <br />
 
-// Create a react component (function component)
-const App = () => {
+                <button>Encrypt!</button>
+            </form>
+        );
+    }
+}
 
-    return (
-        <div>
-            <label className="labelPlaintext" for="plaintext">
-                Enter plaintext:
-            </label>
-            <input id="plaintext" type="text" />
-            <label className="labelShift" for="shift">
-                Enter shift number:
-            </label>
-            <input id="shift" type="number" />
-            <button style={{ backgroundColor: 'blue', color: 'white' }}>
-                {getButtonText()}
-            </button>
-        </div >
-    );
-};
-
-// Take the react component and show it on the screen
+// Renderer
 ReactDOM.render(
-    <App />,
+    <CypherForm />,
     document.querySelector('#root')
 );
