@@ -6,7 +6,9 @@ class AppPageComponent extends React.Component {
   
     render()  {
         return (
-            <CipherUIComponent />
+            <div class="ui container">
+                <CipherUIComponent />
+            </div>
         );
     };
 };

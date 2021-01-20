@@ -24,27 +24,32 @@ class FormComponent extends React.Component {
         event.preventDefault();
         const plaintext = event.target.plaintext.value;
         const key = event.target.key.value;
-        this.setState({ 
-            outputDecrypt: decrypt(plaintext, key) 
+        this.setState({
+            outputDecrypt: decrypt(plaintext, key)
         });
     }
 
-    render () {
+    render() {
         return (
-            <form onSubmit={this.handleSubmitEncrypt}>
-                <label htmlFor="username">Enter plaintext:</label>
-                <input id="plaintext" name="plaintext" type="text" />
-                <br />
+            <div class="ui placeholder segment">
+                <form class="ui form" onSubmit={this.handleSubmitEncrypt}>
+                    <div class="field">
+                        <label htmlFor="username">Enter plaintext:</label>
+                        <input id="plaintext" name="plaintext" type="text" />
+                    </div>
 
-                <label htmlFor="email">Enter key shift:</label>
-                <input id="key" name="key" type="number" />
-                <br />
+                    <div class="field">
+                        <label htmlFor="email">Enter key:</label>
+                        <input class="field" id="key" name="key" type="number" />
+                    </div>
 
-                <button>Encrypt!</button>
-                <br />
+                    <button class="ui button">Encrypt!</button>
 
-                <p>Result: {this.state.outputEncrypt}</p>
-            </form>
+                    <h3 class="ui center aligned header">{this.state.outputEncrypt}</h3>
+                    <br />
+                    <br />
+                </form>
+            </div>
         );
     };
 };
