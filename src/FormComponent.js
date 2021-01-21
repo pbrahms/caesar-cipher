@@ -8,7 +8,7 @@ class FormComponent extends React.Component {
         super();
         this.handleSubmitEncrypt = this.handleSubmitEncrypt.bind(this);
         this.handleSubmitDecrypt = this.handleSubmitDecrypt.bind(this);
-        this.state = { output: '' };
+        this.state = { encryptOutput: '—', stylePlaceholder: {color: "#F9FAFB", fontStyle: "italic"} };
     }
 
     handleSubmitEncrypt(event) {
@@ -16,7 +16,8 @@ class FormComponent extends React.Component {
         const plaintext = event.target.plaintext.value;
         const key = event.target.key.value;
         this.setState({
-            outputEncrypt: encrypt(plaintext, key)
+            encryptOutput: encrypt(plaintext, key),
+            stylePlaceholder: {}
         });
     }
 
@@ -28,24 +29,25 @@ class FormComponent extends React.Component {
             outputDecrypt: decrypt(plaintext, key)
         });
     }
-
+    
     render() {
         return (
             <div class="ui placeholder segment">
                 <form class="ui form" onSubmit={this.handleSubmitEncrypt}>
                     <div class="field">
-                        <label htmlFor="username">Enter plaintext:</label>
+                        <label htmlFor="username">{this.props.label1}</label>
                         <input id="plaintext" name="plaintext" type="text" />
                     </div>
 
                     <div class="field">
-                        <label htmlFor="email">Enter key:</label>
+                        <label htmlFor="email">{this.props.label2}<br /></label>
                         <input class="field" id="key" name="key" type="number" />
+                        <span style={{color: 'LightGray', fontStyle: 'italic'}}>{this.props.note}</span>
                     </div>
 
-                    <button class="ui button">Encrypt!</button>
+                    <button class="ui button">{this.props.button}</button>
 
-                    <h3 class="ui center aligned header">{this.state.outputEncrypt}</h3>
+                    <h3 class="ui center aligned header" style={this.state.stylePlaceholder} >{this.state.encryptOutput}</h3>
                     <br />
                     <br />
                 </form>
