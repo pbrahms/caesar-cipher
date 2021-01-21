@@ -1,7 +1,5 @@
-import {origArr, crypArr} from './encrypt'
-
-export const caseCheck = (plaintext) => {
-    for (let i = 0; i < plaintext.length; i++) {
+const caseCheck = (origArr, crypArr) => {
+    for (let i = 0; i < origArr.length; i++) {
         if (origArr[i] === origArr[i].toLowerCase()) {
             crypArr[i] = crypArr[i].toLowerCase();
         }

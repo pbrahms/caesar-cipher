@@ -1,74 +1,67 @@
 import React from 'react';
-import encrypt from './encrypt'
-import decrypt from './decrypt'
+import { encrypt, decrypt } from './encryption';
+
+const ENCRYPT_FORM_PREFERENCES = {
+    formType: "encrypt",
+    label1: "Enter plaintext:",
+    label2: "Enter key:",
+    note: "use negative numbers to shift left",
+    button: "Encrypt!",
+    stylePlaceholder1: { color: 'LightGray', fontStyle: 'italic' },
+    stylePlaceholder2: { color: "#F9FAFB", fontStyle: "italic" },
+    functionOutput: '.',
+};
+
+const DECRYPT_FORM_PREFERENCES = {
+    formType: "decrypt",
+    label1: "Enter ciphertext:",
+    label2: "Enter key:",
+    note: ".",
+    button: "Decrypt!",
+    stylePlaceholder1: { color: "#F9FAFB", fontStyle: 'italic' },
+    stylePlaceholder2: { color: "#F9FAFB", fontStyle: "italic" },
+    functionOutput: '.',
+};
 
 class FormComponent extends React.Component {
 
     constructor(props) {
         super(props);
-        this.handleSubmit = this.handleSubmit.bind(this);
-        if (this.props.formType === "encrypt") {
-            this.state = {
-                formType: "encrypt",
-                label1: "Enter plaintext:",
-                label2: "Enter key:",
-                note: "use negative numbers to shift left",
-                button: "Encrypt!",
-                stylePlaceholder1: { color: 'LightGray', fontStyle: 'italic' },
-                stylePlaceholder2: { color: "#F9FAFB", fontStyle: "italic" },
-                functionOutput: '.',
-            };
-        }
-        else if (this.props.formType === "decrypt") {
-            this.state = {
-                formType: "decrypt",
-                label1: "Enter ciphertext:",
-                label2: "Enter key:",
-                note: ".",
-                button: "Decrypt!",
-                stylePlaceholder1: { color: "#F9FAFB", fontStyle: 'italic' },
-                stylePlaceholder2: { color: "#F9FAFB", fontStyle: "italic" },
-                functionOutput: '.',
-            };
-        }
+        this.state = this.props.formType === "encrypt"
+            ? ENCRYPT_FORM_PREFERENCES
+            : DECRYPT_FORM_PREFERENCES;
     }
 
     handleSubmit(event) {
         event.preventDefault();
         const plaintext = event.target.plaintext.value;
         const key = event.target.key.value;
-        if (this.state.formType === "encrypt") {
-            this.setState({
-                functionOutput: encrypt(plaintext, key),
-                stylePlaceholder2: {}
-            });
-        }
-        else if (this.state.formType === "decrypt") {
-            this.setState({
-                functionOutput: decrypt(plaintext, key),
-                stylePlaceholder2: {}
-            });
-        }
+        this.setState({
+            stylePlaceholder2: {},
+            functionOutput: this.state.formType === "encrypt"
+                ? encrypt(plaintext, key)
+                : decrypt(plaintext, key)
+        });
     }
 
     render() {
         return (
-            <div class="ui placeholder segment">
-                <form class="ui form" onSubmit={this.handleSubmit}>
-                    <div class="field">
+            <div className="ui placeholder segment">
+                <form className="ui form" onSubmit={e => this.handleSubmit(e)}>
+                    <div className="field">
                         <label htmlFor="username">{this.state.label1}</label>
                         <input id="plaintext" name="plaintext" type="text" />
                     </div>
 
-                    <div class="field">
+                    <div className="field">
                         <label htmlFor="email">{this.state.label2}<br /></label>
-                        <input class="field" id="key" name="key" type="number" />
+                        <input className="field" id="key" name="key" type="number" />
                         <span style={this.state.stylePlaceholder1}>{this.state.note}</span>
                     </div>
 
-                    <button class="ui button">{this.state.button}</button>
+                    <button className="ui button">{this.state.button}</button>
 
-                    <h3 class="ui center aligned header" style={this.state.stylePlaceholder2} >{this.state.functionOutput}</h3>
+                    <h3 className="ui center aligned header" style={this.state.stylePlaceholder2} >{this.state.functionOutput}</h3>
                     <br />
                     <br />
                 </form>

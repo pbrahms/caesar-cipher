@@ -1,11 +1,8 @@
 import caseCheck from './caseCheck';
 
-export let origArr, crypArr = true;
-
-// Encrypt function
-const encrypt = (plaintext, key) => {
-    origArr = plaintext.split('');
-    crypArr = [];
+export const encrypt = (plaintext, key) => {
+    const origArr = plaintext.split('');
+    let crypArr = [];
     key = key % 26;
 
     for (let i = 0; i < plaintext.length; i++) {
@@ -23,8 +20,8 @@ const encrypt = (plaintext, key) => {
         }
     }
 
-    caseCheck(plaintext);
+    caseCheck(origArr, crypArr);
     return crypArr.join('');
 }
 
-export default encrypt;
+export const decrypt = (plaintext, key) => encrypt(plaintext, key * -1);

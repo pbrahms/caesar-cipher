@@ -1,12 +1,12 @@
 import React from 'react';
-import ReactDOM from 'react-dom'
+import ReactDOM from 'react-dom';
 import CipherUIComponent from './CipherUIComponent';
 
 class AppPageComponent extends React.Component {
   
     render()  {
         return (
-            <div class="ui container">
+            <div className="ui container">
                 <CipherUIComponent />
             </div>
         );
