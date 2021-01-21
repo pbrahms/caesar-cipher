@@ -1,4 +1,3 @@
-// importing encrypt function
 import encrypt from './encrypt'
 
 // Decrypt function is encrypt function with inverted key value (positive to negative and vice versa)
